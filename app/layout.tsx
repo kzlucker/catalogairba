@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { CartProvider } from "@/components/CartContext";
-import Footer from "@/components/Footer";
+import ConditionalFooter from "@/components/ConditionalFooter";
 
 export const metadata: Metadata = {
   title: "Каталог продукции",
@@ -19,7 +19,7 @@ export default function RootLayout({
         <CartProvider>
           <div className="flex min-h-screen flex-col">
             {children}
-            <Footer />
+            <ConditionalFooter />
           </div>
         </CartProvider>
       </body>

@@ -5,6 +5,7 @@
 export interface Category {
   id: string;
   name: string;
+  sort_order: number;
   created_at: string;
 }
 
@@ -20,7 +21,10 @@ export interface Product {
   fats: number;
   carbs: number;
   image_url: string | null;
+  images: string[];
   is_active: boolean;
+  is_hit: boolean;
+  is_unique: boolean;
   category_id: string | null;
   created_at: string;
 }

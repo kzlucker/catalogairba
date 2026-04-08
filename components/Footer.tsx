@@ -9,9 +9,9 @@ const CATEGORY_LINKS = [
 ] as const;
 
 const HELP_LINKS = [
-  { label: "Доставка и оплата", href: "#" },
-  { label: "О нас", href: "#" },
-  { label: "Контакты", href: "#" },
+  { label: "Коммерческие условия", href: "/commercial" },
+  { label: "Доставка и оплата", href: "/commercial" },
+  { label: "Контакты", href: "/commercial#contacts" },
 ] as const;
 
 const linkClass =

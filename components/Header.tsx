@@ -48,6 +48,12 @@ export default function Header() {
             </div>
 
             <div className="flex items-center gap-2 sm:gap-3 sm:shrink-0">
+              <Link
+                href="/commercial"
+                className="hidden sm:inline-flex items-center rounded-2xl border border-gray-200 bg-white px-3 py-2 text-sm font-medium text-gray-600 shadow-sm transition-colors hover:border-green-200 hover:bg-green-50 hover:text-green-700 whitespace-nowrap"
+              >
+                Условия
+              </Link>
               <button
                 type="button"
                 onClick={openCart}

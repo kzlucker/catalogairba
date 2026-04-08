@@ -4,11 +4,24 @@ import {
   createContext,
   useCallback,
   useContext,
+  useEffect,
   useMemo,
   useState,
   type ReactNode,
 } from "react";
 import type { Product } from "@/types/database";
+
+const CART_KEY = "airba_cart";
+
+function loadFromStorage(): CartLine[] {
+  if (typeof window === "undefined") return [];
+  try {
+    const saved = localStorage.getItem(CART_KEY);
+    return saved ? (JSON.parse(saved) as CartLine[]) : [];
+  } catch {
+    return [];
+  }
+}
 
 export type CartLine = {
   product: Product;
@@ -31,9 +44,17 @@ type CartContextValue = {
 const CartContext = createContext<CartContextValue | null>(null);
 
 export function CartProvider({ children }: { children: ReactNode }) {
-  const [items, setItems] = useState<CartLine[]>([]);
+  const [items, setItems] = useState<CartLine[]>(loadFromStorage);
   const [isOpen, setIsOpen] = useState(false);
   const [bumpVersion, setBumpVersion] = useState(0);
+
+  useEffect(() => {
+    try {
+      localStorage.setItem(CART_KEY, JSON.stringify(items));
+    } catch {
+      // localStorage недоступен
+    }
+  }, [items]);
 
   const addItem = useCallback((product: Product) => {
     setItems((prev) => {

@@ -3,6 +3,7 @@
 import { useState, useEffect, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Header from "@/components/Header";
+import HeroSlider from "@/components/HeroSlider";
 import ProductCard from "@/components/ProductCard";
 import ProductModal from "@/components/ProductModal";
 import ProductSkeleton from "@/components/ProductSkeleton";
@@ -14,6 +15,7 @@ export default function Home() {
   const [products, setProducts] = useState<ProductWithCategory[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
   const [loading, setLoading] = useState(true);
+  const [loadError, setLoadError] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   /** null = «Все» */
   const [selectedCategoryId, setSelectedCategoryId] = useState<string | null>(
@@ -43,6 +45,7 @@ export default function Home() {
         if (process.env.NODE_ENV === "development") {
           console.error("[catalog] Ошибка загрузки каталога:", err);
         }
+        setLoadError(true);
         setProducts([]);
         setCategories([]);
       } finally {
@@ -73,6 +76,7 @@ export default function Home() {
   return (
     <div className="min-h-screen flex flex-col">
       <Header />
+      <HeroSlider />
 
       <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-10">
         <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-6 sm:mb-8">
@@ -125,7 +129,18 @@ export default function Home() {
               </div>
             </div>
 
-            {products.length === 0 ? (
+            {loadError ? (
+              <div className="rounded-3xl border border-red-100 bg-red-50 p-8 text-center">
+                <p className="text-red-700 font-medium mb-4">Не удалось загрузить каталог. Проверьте подключение и попробуйте снова.</p>
+                <button
+                  type="button"
+                  onClick={() => window.location.reload()}
+                  className="inline-flex items-center justify-center rounded-2xl bg-red-600 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-red-700"
+                >
+                  Обновить страницу
+                </button>
+              </div>
+            ) : products.length === 0 ? (
               <p className="text-gray-500">В каталоге пока нет товаров.</p>
             ) : filteredProducts.length === 0 && searchQuery.trim() ? (
               <div className="rounded-3xl border border-gray-200 bg-white p-8 text-center shadow-sm">

@@ -40,7 +40,7 @@ export async function updateSession(request: NextRequest) {
         new URL("/admin/login", request.url)
       );
       supabaseResponse.cookies.getAll().forEach((c) => {
-        redirectResponse.cookies.set(c.name, c.value);
+        redirectResponse.cookies.set(c.name, c.value, { path: "/" });
       });
       return redirectResponse;
     }
@@ -49,7 +49,7 @@ export async function updateSession(request: NextRequest) {
         new URL("/admin", request.url)
       );
       supabaseResponse.cookies.getAll().forEach((c) => {
-        redirectResponse.cookies.set(c.name, c.value);
+        redirectResponse.cookies.set(c.name, c.value, { path: "/" });
       });
       return redirectResponse;
     }

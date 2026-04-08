@@ -85,9 +85,6 @@ export default function CartDrawer() {
                         <p className="font-medium text-gray-900 line-clamp-2">
                           {product.name}
                         </p>
-                        <p className="mt-1 text-sm text-green-600 font-semibold">
-                          {formatPrice(Number(product.price))} ₸
-                        </p>
                         <div className="mt-2 flex items-center gap-2">
                           <button
                             type="button"
@@ -132,9 +129,6 @@ export default function CartDrawer() {
               <div className="border-t border-gray-100 px-5 py-4">
                 <div className="flex items-center justify-between text-base font-bold text-gray-900">
                   <span>Итого</span>
-                  <span className="text-green-600">
-                    {formatPrice(subtotal)} ₸
-                  </span>
                 </div>
                 <p className="mt-2 text-xs text-gray-500">
                   Оформление заказа — в разработке

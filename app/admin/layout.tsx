@@ -39,7 +39,8 @@ export default function AdminLayout({
               href === "/admin"
                 ? pathname === "/admin" ||
                   pathname === "/admin/" ||
-                  pathname.startsWith("/admin/add")
+                  pathname.startsWith("/admin/add") ||
+                  pathname.startsWith("/admin/edit")
                 : pathname === href || pathname.startsWith(`${href}/`);
             return (
               <Link
@@ -60,9 +61,12 @@ export default function AdminLayout({
         <div className="border-t border-gray-100 p-4">
           <Link
             href="/"
-            className="text-sm text-gray-500 transition-colors hover:text-green-600"
+            className="flex items-center gap-2 rounded-2xl border border-gray-200 px-4 py-2.5 text-sm font-medium text-gray-600 transition-colors hover:bg-green-50 hover:text-green-600 hover:border-green-200"
           >
-            ← В каталог
+            <svg className="h-4 w-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round">
+              <path d="M15 18l-6-6 6-6" />
+            </svg>
+            На главную страницу
           </Link>
         </div>
       </aside>

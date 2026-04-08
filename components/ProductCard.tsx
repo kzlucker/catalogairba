@@ -10,7 +10,7 @@ export type ProductCardProps = {
 };
 
 export default function ProductCard({ product, onClick }: ProductCardProps) {
-  const { name, calories, proteins, fats, carbs, weight_info, image_url } =
+  const { name, price, calories, proteins, fats, carbs, weight_info, image_url, is_hit, is_unique } =
     product;
   const [imageError, setImageError] = useState(false);
 
@@ -34,11 +34,22 @@ export default function ProductCard({ product, onClick }: ProductCardProps) {
       className="group bg-white rounded-3xl shadow-sm hover:shadow-md transition-shadow duration-200 overflow-hidden border border-gray-100 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-green-500 focus-visible:ring-offset-2"
     >
       <div className="relative aspect-[4/3] bg-gray-100 flex items-center justify-center overflow-hidden">
+        {is_hit && (
+          <span className="absolute top-3 left-3 z-10 inline-flex items-center gap-1 rounded-full px-3 py-1 text-xs font-bold text-gray-900 shadow-md" style={{ backgroundColor: "#FFFF00" }}>
+            🔥 ХИТ
+          </span>
+        )}
+        {is_unique && (
+          <span className="absolute top-3 right-3 z-10 inline-flex items-center gap-1 rounded-full bg-purple-600 px-3 py-1 text-xs font-bold text-white shadow-md">
+            ⭐ Уникальный
+          </span>
+        )}
         {showImage ? (
           <img
             src={image_url}
             alt=""
             className="h-full w-full object-cover"
+            loading="lazy"
             onError={() => setImageError(true)}
           />
         ) : (
@@ -50,9 +61,9 @@ export default function ProductCard({ product, onClick }: ProductCardProps) {
       </div>
 
       <div className="p-4 sm:p-5">
-        <h2 className="text-lg font-bold text-gray-900 mb-2 line-clamp-2">
+        <h3 className="text-base font-bold text-gray-900 mb-1 line-clamp-2">
           {name}
-        </h2>
+        </h3>
         {weight_info && (
           <p className="text-sm text-gray-500 mb-3">{weight_info}</p>
         )}
