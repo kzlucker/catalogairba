@@ -2,12 +2,13 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Package, FolderTree } from "lucide-react";
+import { Package, FolderTree, ImagePlus } from "lucide-react";
 import { isAdminLoginPath } from "@/lib/admin-paths";
 
 const nav = [
   { href: "/admin", label: "Товары", icon: Package },
   { href: "/admin/categories", label: "Категории", icon: FolderTree },
+  { href: "/admin/import-photos", label: "Загрузить фото", icon: ImagePlus },
 ] as const;
 
 export default function AdminLayout({

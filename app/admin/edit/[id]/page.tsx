@@ -46,6 +46,34 @@ export default function AdminEditProductPage() {
   const [proteins, setProteins] = useState("");
   const [fats, setFats] = useState("");
   const [carbs, setCarbs] = useState("");
+  const [addingCategory, setAddingCategory] = useState(false);
+  const [newCategoryName, setNewCategoryName] = useState("");
+  const [savingCategory, setSavingCategory] = useState(false);
+
+  async function handleAddCategory() {
+    const trimmed = newCategoryName.trim();
+    if (!trimmed) return;
+    setSavingCategory(true);
+    try {
+      const supabase = getSupabaseBrowser();
+      const maxOrder = categories.length > 0 ? Math.max(...categories.map((c) => c.sort_order ?? 0)) : 0;
+      const { data, error: err } = await supabase
+        .from("categories")
+        .insert({ name: trimmed, sort_order: maxOrder + 1 })
+        .select()
+        .single();
+      if (err) throw err;
+      setCategories((prev) => [...prev, data as Category]);
+      setCategoryId((data as Category).id);
+      setNewCategoryName("");
+      setAddingCategory(false);
+    } catch (e) {
+      alert(e instanceof Error ? e.message : "Ошибка при добавлении категории");
+    } finally {
+      setSavingCategory(false);
+    }
+  }
+
   const [isActive, setIsActive] = useState(true);
   const [isHit, setIsHit] = useState(false);
   const [isUnique, setIsUnique] = useState(false);
@@ -251,13 +279,46 @@ export default function AdminEditProductPage() {
               <input id="edit-barcode" type="text" value={barcode} onChange={(e) => setBarcode(e.target.value)} className={inputClass} />
             </div>
             <div>
-              <label htmlFor="edit-category" className={labelClass}>Категория</label>
-              <select id="edit-category" value={categoryId} onChange={(e) => setCategoryId(e.target.value)} className={inputClass}>
-                <option value="">— Без категории —</option>
-                {categories.map((c) => (
-                  <option key={c.id} value={c.id}>{c.name}</option>
-                ))}
-              </select>
+              <div className="flex items-center justify-between mb-1.5">
+                <label htmlFor="edit-category" className="text-sm font-medium text-gray-700">Категория</label>
+                <button
+                  type="button"
+                  onClick={() => { setAddingCategory((v) => !v); setNewCategoryName(""); }}
+                  className="inline-flex items-center gap-1 text-xs font-medium text-green-600 hover:text-green-700 transition-colors"
+                >
+                  <Plus className="h-3.5 w-3.5" />
+                  {addingCategory ? "Отмена" : "Новая категория"}
+                </button>
+              </div>
+
+              {addingCategory ? (
+                <div className="flex gap-2">
+                  <input
+                    type="text"
+                    autoFocus
+                    value={newCategoryName}
+                    onChange={(e) => setNewCategoryName(e.target.value)}
+                    onKeyDown={(e) => { if (e.key === "Enter") { e.preventDefault(); handleAddCategory(); } if (e.key === "Escape") setAddingCategory(false); }}
+                    placeholder="Название категории"
+                    className={inputClass}
+                  />
+                  <button
+                    type="button"
+                    onClick={handleAddCategory}
+                    disabled={savingCategory || !newCategoryName.trim()}
+                    className="shrink-0 rounded-2xl bg-green-500 px-4 py-3 text-sm font-semibold text-white hover:bg-green-600 disabled:opacity-50 transition-colors"
+                  >
+                    {savingCategory ? "…" : "Добавить"}
+                  </button>
+                </div>
+              ) : (
+                <select id="edit-category" value={categoryId} onChange={(e) => setCategoryId(e.target.value)} className={inputClass}>
+                  <option value="">— Без категории —</option>
+                  {categories.map((c) => (
+                    <option key={c.id} value={c.id}>{c.name}</option>
+                  ))}
+                </select>
+              )}
             </div>
           </div>
 
