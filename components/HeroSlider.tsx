@@ -112,7 +112,7 @@ export default function HeroSlider() {
               type="button"
               onClick={() => setLightbox(true)}
               aria-label="Открыть на весь экран"
-              className="relative h-[88%] max-w-sm w-full drop-shadow-2xl focus:outline-none focus-visible:ring-4 focus-visible:ring-green-400 rounded-2xl cursor-zoom-in group"
+              className="relative h-[94%] max-w-2xl w-full drop-shadow-2xl focus:outline-none focus-visible:ring-4 focus-visible:ring-green-400 rounded-2xl cursor-zoom-in group"
             >
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img

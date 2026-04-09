@@ -200,22 +200,22 @@ export default function ProductModal({ product, onClose }: ProductModalProps) {
                   <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-3">
                     Пищевая ценность на 100 г
                   </h3>
-                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-                    <div className="p-4 rounded-2xl bg-amber-50 border border-amber-100">
-                      <div className="text-2xl font-bold text-amber-700">{calories}</div>
-                      <div className="text-xs font-medium text-amber-600">ккал</div>
+                  <div className="grid grid-cols-4 divide-x divide-gray-100 rounded-2xl bg-gray-50 overflow-hidden">
+                    <div className="flex flex-col items-center py-3 px-2">
+                      <span className="text-[10px] font-medium text-gray-400 uppercase tracking-wide">ккал</span>
+                      <span className="text-xl font-bold text-amber-600 mt-1">{calories}</span>
                     </div>
-                    <div className="p-4 rounded-2xl bg-blue-50 border border-blue-100">
-                      <div className="text-2xl font-bold text-blue-700">{proteins}</div>
-                      <div className="text-xs font-medium text-blue-600">белки, г</div>
+                    <div className="flex flex-col items-center py-3 px-2">
+                      <span className="text-[10px] font-medium text-gray-400 uppercase tracking-wide">белки</span>
+                      <span className="text-xl font-bold text-blue-600 mt-1">{proteins}г</span>
                     </div>
-                    <div className="p-4 rounded-2xl bg-orange-50 border border-orange-100">
-                      <div className="text-2xl font-bold text-orange-700">{fats}</div>
-                      <div className="text-xs font-medium text-orange-600">жиры, г</div>
+                    <div className="flex flex-col items-center py-3 px-2">
+                      <span className="text-[10px] font-medium text-gray-400 uppercase tracking-wide">жиры</span>
+                      <span className="text-xl font-bold text-orange-500 mt-1">{fats}г</span>
                     </div>
-                    <div className="p-4 rounded-2xl bg-green-50 border border-green-100">
-                      <div className="text-2xl font-bold text-green-700">{carbs}</div>
-                      <div className="text-xs font-medium text-green-600">углеводы, г</div>
+                    <div className="flex flex-col items-center py-3 px-2">
+                      <span className="text-[10px] font-medium text-gray-400 uppercase tracking-wide">углев</span>
+                      <span className="text-xl font-bold text-green-600 mt-1">{carbs}г</span>
                     </div>
                   </div>
                 </div>

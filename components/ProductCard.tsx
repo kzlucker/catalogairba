@@ -64,17 +64,6 @@ export default function ProductCard({ product, onClick }: ProductCardProps) {
     >
       <div className="relative aspect-[4/3] bg-gray-100 flex items-center justify-center overflow-hidden">
 
-        {/* Blurred background */}
-        {activePhoto && (
-          <img
-            src={activePhoto}
-            alt=""
-            aria-hidden
-            className="absolute inset-0 h-full w-full object-cover scale-110 opacity-30"
-            style={{ filter: "blur(16px)" }}
-          />
-        )}
-
         {/* Badges */}
         {is_hit && (
           <span className="absolute top-3 left-3 z-10 inline-flex items-center gap-1 rounded-full px-3 py-1 text-xs font-bold text-gray-900 shadow-md" style={{ backgroundColor: "#FFFF00" }}>
@@ -93,7 +82,7 @@ export default function ProductCard({ product, onClick }: ProductCardProps) {
             key={activePhoto}
             src={activePhoto}
             alt=""
-            className="relative z-10 h-[88%] w-[88%] object-contain drop-shadow-sm transition-opacity duration-200"
+            className="relative z-10 h-full w-full object-cover transition-opacity duration-200"
             loading="lazy"
           />
         ) : (
@@ -141,19 +130,23 @@ export default function ProductCard({ product, onClick }: ProductCardProps) {
         {weight_info && (
           <p className="text-sm text-gray-500 mb-3">{weight_info}</p>
         )}
-        <div className="flex flex-wrap gap-2">
-          <span className="inline-flex items-center px-2.5 py-1 rounded-xl text-xs font-medium bg-amber-50 text-amber-700" title="Калории">
-            {calories} ккал
-          </span>
-          <span className="inline-flex items-center px-2.5 py-1 rounded-xl text-xs font-medium bg-blue-50 text-blue-700" title="Белки">
-            Б {proteins} г
-          </span>
-          <span className="inline-flex items-center px-2.5 py-1 rounded-xl text-xs font-medium bg-orange-50 text-orange-700" title="Жиры">
-            Ж {fats} г
-          </span>
-          <span className="inline-flex items-center px-2.5 py-1 rounded-xl text-xs font-medium bg-green-50 text-green-700" title="Углеводы">
-            У {carbs} г
-          </span>
+        <div className="grid grid-cols-4 divide-x divide-gray-100 rounded-2xl bg-gray-50 overflow-hidden">
+          <div className="flex flex-col items-center py-2 px-1">
+            <span className="text-[10px] font-medium text-gray-400 uppercase tracking-wide">ккал</span>
+            <span className="text-sm font-bold text-amber-600 mt-0.5">{calories}</span>
+          </div>
+          <div className="flex flex-col items-center py-2 px-1">
+            <span className="text-[10px] font-medium text-gray-400 uppercase tracking-wide">белки</span>
+            <span className="text-sm font-bold text-blue-600 mt-0.5">{proteins}г</span>
+          </div>
+          <div className="flex flex-col items-center py-2 px-1">
+            <span className="text-[10px] font-medium text-gray-400 uppercase tracking-wide">жиры</span>
+            <span className="text-sm font-bold text-orange-500 mt-0.5">{fats}г</span>
+          </div>
+          <div className="flex flex-col items-center py-2 px-1">
+            <span className="text-[10px] font-medium text-gray-400 uppercase tracking-wide">углев</span>
+            <span className="text-sm font-bold text-green-600 mt-0.5">{carbs}г</span>
+          </div>
         </div>
       </div>
     </article>

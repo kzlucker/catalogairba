@@ -17,12 +17,25 @@ export default function Home() {
   const [loading, setLoading] = useState(true);
   const [loadError, setLoadError] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
-  /** null = «Все» */
-  const [selectedCategoryId, setSelectedCategoryId] = useState<string | null>(
-    null
-  );
+  const [selectedCategoryIds, setSelectedCategoryIds] = useState<string[]>([]);
+  const [filterHit, setFilterHit] = useState(false);
+  const [filterUnique, setFilterUnique] = useState(false);
   const searchQuery = useSearchStore((s) => s.searchQuery);
   const setSearchQuery = useSearchStore((s) => s.setSearchQuery);
+
+  const hasActiveFilters = selectedCategoryIds.length > 0 || filterHit || filterUnique;
+
+  function toggleCategory(id: string) {
+    setSelectedCategoryIds((prev) =>
+      prev.includes(id) ? prev.filter((c) => c !== id) : [...prev, id]
+    );
+  }
+
+  function resetFilters() {
+    setSelectedCategoryIds([]);
+    setFilterHit(false);
+    setFilterUnique(false);
+  }
 
   useEffect(() => {
     async function loadCatalog() {
@@ -55,21 +68,20 @@ export default function Home() {
     loadCatalog();
   }, []);
 
-  const filteredByCategory = useMemo(() => {
-    if (selectedCategoryId === null) return products;
-    return products.filter((p) => p.category_id === selectedCategoryId);
-  }, [products, selectedCategoryId]);
-
   const filteredProducts = useMemo(() => {
+    let result = products;
+    if (selectedCategoryIds.length > 0) {
+      result = result.filter((p) => p.category_id !== null && selectedCategoryIds.includes(p.category_id));
+    }
+    if (filterHit) result = result.filter((p) => p.is_hit);
+    if (filterUnique) result = result.filter((p) => p.is_unique);
     const q = searchQuery.trim().toLowerCase();
-    if (!q) return filteredByCategory;
-    return filteredByCategory.filter((p) =>
-      p.name.toLowerCase().includes(q)
-    );
-  }, [filteredByCategory, searchQuery]);
+    if (q) result = result.filter((p) => p.name.toLowerCase().includes(q));
+    return result;
+  }, [products, selectedCategoryIds, filterHit, filterUnique, searchQuery]);
 
   const pillBase =
-    "inline-flex shrink-0 items-center rounded-2xl px-4 py-2 text-sm font-medium transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-green-500 focus-visible:ring-offset-2";
+    "inline-flex shrink-0 items-center gap-1.5 rounded-2xl px-4 py-2 text-sm font-medium transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-green-500 focus-visible:ring-offset-2";
   const pillInactive = "bg-gray-100 text-gray-700 hover:bg-gray-200";
   const pillActive = "bg-green-500 text-white shadow-sm hover:bg-green-600";
 
@@ -79,9 +91,12 @@ export default function Home() {
       <HeroSlider />
 
       <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-10">
-        <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-6 sm:mb-8">
-          Каталог продукции
-        </h1>
+        <div className="flex items-center gap-3 mb-6 sm:mb-8">
+          <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">
+            Каталог продукции
+          </h1>
+          <img src="/halal.png" alt="Халал" title="Халал сертифицировано" className="shrink-0 w-16 h-16 sm:w-20 sm:h-20 object-contain" />
+        </div>
 
         {loading ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6">
@@ -91,41 +106,62 @@ export default function Home() {
           </div>
         ) : (
           <>
-            {/* Фильтр по категориям: горизонтальный скролл на мобильных */}
-            <div className="mb-6 sm:mb-8 -mx-4 px-4 sm:mx-0 sm:px-0">
-              <div
-                className="flex gap-2 overflow-x-auto pb-2 scrollbar-hide flex-nowrap"
-                role="tablist"
-                aria-label="Категории"
-              >
-                <button
-                  type="button"
-                  role="tab"
-                  aria-selected={selectedCategoryId === null}
-                  onClick={() => setSelectedCategoryId(null)}
-                  className={`${pillBase} ${
-                    selectedCategoryId === null ? pillActive : pillInactive
-                  }`}
-                >
-                  Все
-                </button>
+            {/* Фильтры */}
+            <div className="mb-6 sm:mb-8 -mx-4 px-4 sm:mx-0 sm:px-0 space-y-3">
+              {/* Строка 1: категории */}
+              <div className="flex gap-2 overflow-x-auto pb-1 scrollbar-hide flex-nowrap">
                 {categories.map((cat) => {
-                  const active = selectedCategoryId === cat.id;
+                  const active = selectedCategoryIds.includes(cat.id);
                   return (
                     <button
                       key={cat.id}
                       type="button"
-                      role="tab"
-                      aria-selected={active}
-                      onClick={() => setSelectedCategoryId(cat.id)}
-                      className={`${pillBase} ${
-                        active ? pillActive : pillInactive
-                      }`}
+                      aria-pressed={active}
+                      onClick={() => toggleCategory(cat.id)}
+                      className={`${pillBase} ${active ? pillActive : pillInactive}`}
                     >
+                      {active && (
+                        <svg viewBox="0 0 12 12" fill="currentColor" className="w-3 h-3 shrink-0">
+                          <path d="M10 3L5 8.5 2 5.5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" fill="none"/>
+                        </svg>
+                      )}
                       {cat.name}
                     </button>
                   );
                 })}
+              </div>
+
+              {/* Строка 2: специальные фильтры + сброс */}
+              <div className="flex gap-2 flex-wrap items-center">
+                <button
+                  type="button"
+                  aria-pressed={filterHit}
+                  onClick={() => setFilterHit((v) => !v)}
+                  className={`${pillBase} ${filterHit ? "bg-yellow-400 text-gray-900 shadow-sm hover:bg-yellow-500" : pillInactive}`}
+                >
+                  🔥 Хит
+                </button>
+                <button
+                  type="button"
+                  aria-pressed={filterUnique}
+                  onClick={() => setFilterUnique((v) => !v)}
+                  className={`${pillBase} ${filterUnique ? "bg-purple-600 text-white shadow-sm hover:bg-purple-700" : pillInactive}`}
+                >
+                  ⭐ Уникальный
+                </button>
+
+                {hasActiveFilters && (
+                  <button
+                    type="button"
+                    onClick={resetFilters}
+                    className="inline-flex shrink-0 items-center gap-1 rounded-2xl px-3 py-2 text-sm font-medium text-gray-500 hover:text-gray-700 hover:bg-gray-100 transition-colors"
+                  >
+                    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" className="w-3.5 h-3.5">
+                      <path d="M12 4L4 12M4 4l8 8"/>
+                    </svg>
+                    Сбросить
+                  </button>
+                )}
               </div>
             </div>
 
@@ -142,26 +178,17 @@ export default function Home() {
               </div>
             ) : products.length === 0 ? (
               <p className="text-gray-500">В каталоге пока нет товаров.</p>
-            ) : filteredProducts.length === 0 && searchQuery.trim() ? (
+            ) : filteredProducts.length === 0 ? (
               <div className="rounded-3xl border border-gray-200 bg-white p-8 text-center shadow-sm">
-                <p className="text-gray-600">
-                  Ничего не нашлось по запросу{" "}
-                  <span className="font-semibold text-gray-900">
-                    «{searchQuery.trim()}»
-                  </span>
-                </p>
+                <p className="text-gray-600 mb-4">Ничего не найдено по выбранным фильтрам.</p>
                 <button
                   type="button"
-                  onClick={() => setSearchQuery("")}
-                  className="mt-4 inline-flex items-center justify-center rounded-2xl bg-green-500 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-green-600"
+                  onClick={() => { resetFilters(); setSearchQuery(""); }}
+                  className="inline-flex items-center justify-center rounded-2xl bg-green-500 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-green-600"
                 >
-                  Сбросить поиск
+                  Сбросить все фильтры
                 </button>
               </div>
-            ) : filteredByCategory.length === 0 ? (
-              <p className="text-gray-500">
-                В этой категории пока нет товаров.
-              </p>
             ) : (
               <motion.div
                 layout
