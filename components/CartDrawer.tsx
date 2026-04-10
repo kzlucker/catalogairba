@@ -50,7 +50,7 @@ export default function CartDrawer() {
               <button
                 type="button"
                 onClick={closeCart}
-                className="rounded-2xl p-2 text-gray-500 hover:bg-gray-100 hover:text-gray-800"
+                className="flex h-11 w-11 items-center justify-center rounded-2xl text-gray-500 hover:bg-gray-100 hover:text-gray-800"
                 aria-label="Закрыть корзину"
               >
                 <X className="h-5 w-5" />
@@ -85,10 +85,10 @@ export default function CartDrawer() {
                         <p className="font-medium text-gray-900 line-clamp-2">
                           {product.name}
                         </p>
-                        <div className="mt-2 flex items-center gap-2">
+                        <div className="mt-2 flex items-center gap-1">
                           <button
                             type="button"
-                            className="rounded-lg border border-gray-200 px-2 py-0.5 text-sm hover:bg-gray-50"
+                            className="flex h-11 w-11 items-center justify-center rounded-xl border border-gray-200 text-lg hover:bg-gray-50 active:bg-gray-100"
                             onClick={() =>
                               setQuantity(product.id, quantity - 1)
                             }
@@ -96,12 +96,12 @@ export default function CartDrawer() {
                           >
                             −
                           </button>
-                          <span className="w-6 text-center text-sm">
+                          <span className="w-8 text-center text-sm font-medium">
                             {quantity}
                           </span>
                           <button
                             type="button"
-                            className="rounded-lg border border-gray-200 px-2 py-0.5 text-sm hover:bg-gray-50"
+                            className="flex h-11 w-11 items-center justify-center rounded-xl border border-gray-200 text-lg hover:bg-gray-50 active:bg-gray-100"
                             onClick={() =>
                               setQuantity(product.id, quantity + 1)
                             }
@@ -112,10 +112,10 @@ export default function CartDrawer() {
                           <button
                             type="button"
                             onClick={() => removeLine(product.id)}
-                            className="ml-auto rounded-xl p-2 text-gray-400 hover:bg-red-50 hover:text-red-600"
+                            className="ml-auto flex h-11 w-11 items-center justify-center rounded-xl text-gray-400 hover:bg-red-50 hover:text-red-600 active:bg-red-100"
                             aria-label="Удалить"
                           >
-                            <Trash2 className="h-4 w-4" />
+                            <Trash2 className="h-5 w-5" />
                           </button>
                         </div>
                       </div>

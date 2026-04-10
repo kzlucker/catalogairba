@@ -66,12 +66,12 @@ export default function ProductCard({ product, onClick }: ProductCardProps) {
 
         {/* Badges */}
         {is_hit && (
-          <span className="absolute top-3 left-3 z-10 inline-flex items-center gap-1 rounded-full px-3 py-1 text-xs font-bold text-gray-900 shadow-md" style={{ backgroundColor: "#FFFF00" }}>
+          <span className="absolute top-3 left-3 z-30 inline-flex items-center gap-1 rounded-full px-3 py-1 text-xs font-bold text-gray-900 shadow-md" style={{ backgroundColor: "#FFFF00" }}>
             🔥 ХИТ
           </span>
         )}
         {is_unique && (
-          <span className={`absolute top-3 z-10 inline-flex items-center gap-1 rounded-full bg-purple-600 px-3 py-1 text-xs font-bold text-white shadow-md ${is_hit ? "right-3" : "right-3"}`}>
+          <span className="absolute top-3 right-3 z-30 inline-flex items-center gap-1 rounded-full bg-purple-600 px-3 py-1 text-xs font-bold text-white shadow-md">
             ⭐ Уникальный
           </span>
         )}
@@ -89,14 +89,14 @@ export default function ProductCard({ product, onClick }: ProductCardProps) {
           <ImageIcon className="w-12 h-12 text-gray-300 group-hover:text-gray-400 transition-colors shrink-0" aria-hidden />
         )}
 
-        {/* Prev / Next arrows — visible on hover when multiple photos */}
+        {/* Prev / Next arrows — always visible on mobile, hover-only on desktop */}
         {hasMultiple && (
           <>
             <button
               type="button"
               onClick={prevPhoto}
               aria-label="Предыдущее фото"
-              className="absolute left-2 top-1/2 -translate-y-1/2 z-20 flex h-7 w-7 items-center justify-center rounded-full bg-white/80 shadow text-gray-700 opacity-0 group-hover:opacity-100 transition-opacity hover:bg-white hover:scale-110"
+              className="absolute left-2 top-1/2 -translate-y-1/2 z-20 flex h-11 w-11 items-center justify-center rounded-full bg-white/80 shadow text-gray-700 opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity hover:bg-white"
             >
               <ChevronLeft />
             </button>
@@ -104,20 +104,20 @@ export default function ProductCard({ product, onClick }: ProductCardProps) {
               type="button"
               onClick={nextPhoto}
               aria-label="Следующее фото"
-              className="absolute right-2 top-1/2 -translate-y-1/2 z-20 flex h-7 w-7 items-center justify-center rounded-full bg-white/80 shadow text-gray-700 opacity-0 group-hover:opacity-100 transition-opacity hover:bg-white hover:scale-110"
+              className="absolute right-2 top-1/2 -translate-y-1/2 z-20 flex h-11 w-11 items-center justify-center rounded-full bg-white/80 shadow text-gray-700 opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity hover:bg-white"
             >
               <ChevronRight />
             </button>
 
             {/* Dots */}
-            <div className="absolute bottom-2 left-1/2 -translate-x-1/2 z-20 flex items-center gap-1">
+            <div className="absolute bottom-2 left-1/2 -translate-x-1/2 z-20 flex items-center gap-2">
               {allPhotos.map((_, i) => (
                 <button
                   key={i}
                   type="button"
                   onClick={(e) => { e.stopPropagation(); setPhotoIndex(i); }}
                   aria-label={`Фото ${i + 1}`}
-                  className={`h-1.5 rounded-full transition-all duration-200 ${i === photoIndex ? "w-4 bg-green-500" : "w-1.5 bg-white/60 hover:bg-white"}`}
+                  className={`h-3 rounded-full transition-all duration-200 ${i === photoIndex ? "w-5 bg-green-500" : "w-3 bg-white/70 hover:bg-white"}`}
                 />
               ))}
             </div>

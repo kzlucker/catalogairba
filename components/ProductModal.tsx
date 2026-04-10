@@ -1,9 +1,8 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { ImageIcon, Barcode, X, ShoppingBag, ChevronLeft, ChevronRight } from "lucide-react";
+import { ImageIcon, Barcode, X, ChevronLeft, ChevronRight } from "lucide-react";
 import type { Product } from "@/types/database";
-import { useCart } from "@/components/CartContext";
 
 function formatPrice(n: number) {
   return new Intl.NumberFormat("ru-KZ", { maximumFractionDigits: 0 }).format(n);
@@ -15,7 +14,6 @@ type ProductModalProps = {
 };
 
 export default function ProductModal({ product, onClose }: ProductModalProps) {
-  const { addItem } = useCart();
   const closeButtonRef = useRef<HTMLButtonElement>(null);
   const dialogRef = useRef<HTMLDivElement>(null);
   const [activeIndex, setActiveIndex] = useState(0);
@@ -80,6 +78,7 @@ export default function ProductModal({ product, onClose }: ProductModalProps) {
         role="dialog"
         aria-modal="true"
         aria-labelledby="product-modal-title"
+        onClick={onClose}
       >
         <div
           className="relative bg-white rounded-3xl shadow-xl max-h-[90vh] w-full max-w-4xl overflow-hidden flex flex-col"
@@ -90,7 +89,7 @@ export default function ProductModal({ product, onClose }: ProductModalProps) {
             ref={closeButtonRef}
             type="button"
             onClick={onClose}
-            className="absolute top-4 right-4 z-10 p-2 rounded-2xl text-gray-500 hover:text-gray-700 hover:bg-gray-100 transition-colors"
+            className="absolute top-3 right-3 z-10 flex h-11 w-11 items-center justify-center rounded-2xl text-gray-500 hover:text-gray-700 hover:bg-gray-100 transition-colors"
             aria-label="Закрыть"
           >
             <X className="w-6 h-6" />
@@ -123,7 +122,7 @@ export default function ProductModal({ product, onClose }: ProductModalProps) {
                         type="button"
                         onClick={() => { setImgError(false); setActiveIndex((i) => (i - 1 + allImages.length) % allImages.length); }}
                         aria-label="Предыдущее фото"
-                        className="absolute left-2 top-1/2 -translate-y-1/2 flex h-9 w-9 items-center justify-center rounded-full bg-white/90 shadow-md text-gray-700 hover:bg-white transition"
+                        className="absolute left-2 top-1/2 -translate-y-1/2 flex h-11 w-11 items-center justify-center rounded-full bg-white/90 shadow-md text-gray-700 hover:bg-white transition"
                       >
                         <ChevronLeft className="h-5 w-5" />
                       </button>
@@ -131,7 +130,7 @@ export default function ProductModal({ product, onClose }: ProductModalProps) {
                         type="button"
                         onClick={() => { setImgError(false); setActiveIndex((i) => (i + 1) % allImages.length); }}
                         aria-label="Следующее фото"
-                        className="absolute right-2 top-1/2 -translate-y-1/2 flex h-9 w-9 items-center justify-center rounded-full bg-white/90 shadow-md text-gray-700 hover:bg-white transition"
+                        className="absolute right-2 top-1/2 -translate-y-1/2 flex h-11 w-11 items-center justify-center rounded-full bg-white/90 shadow-md text-gray-700 hover:bg-white transition"
                       >
                         <ChevronRight className="h-5 w-5" />
                       </button>
@@ -179,15 +178,6 @@ export default function ProductModal({ product, onClose }: ProductModalProps) {
                 <h2 id="product-modal-title" className="text-2xl sm:text-3xl font-bold text-gray-900 pr-10">
                   {name}
                 </h2>
-
-                <button
-                  type="button"
-                  onClick={() => addItem(product)}
-                  className="inline-flex w-full sm:w-auto items-center justify-center gap-2 rounded-2xl bg-green-500 px-6 py-3 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-green-600"
-                >
-                  <ShoppingBag className="h-5 w-5" aria-hidden />
-                  В корзину
-                </button>
 
                 {composition && (
                   <div>

@@ -62,7 +62,7 @@ export default function CommercialPage() {
         <div className="mx-auto max-w-4xl px-4 py-14 sm:px-6 sm:py-20 lg:px-8">
           <Link
             href="/"
-            className="mb-8 inline-flex items-center gap-2 text-sm font-medium text-green-100 transition-colors hover:text-white"
+            className="mb-8 inline-flex min-h-[44px] items-center gap-2 text-sm font-medium text-green-100 transition-colors hover:text-white"
           >
             <ArrowLeft className="h-4 w-4" />
             На главную
@@ -136,8 +136,8 @@ export default function CommercialPage() {
           <p className="text-gray-600 mb-6 text-sm leading-relaxed">
             Мы делим с вами риски. Чем выше ваш объём продаж, тем более гибкие условия по возвратам и обменам мы предоставляем.
           </p>
-          <div className="overflow-hidden rounded-3xl border border-gray-200 shadow-sm">
-            <table className="w-full text-sm">
+          <div className="overflow-x-auto rounded-3xl border border-gray-200 shadow-sm">
+            <table className="w-full min-w-[400px] text-sm">
               <thead>
                 <tr className="bg-green-600 text-white">
                   <th className="px-6 py-4 text-left font-semibold">Объём заказа (₸)</th>
@@ -190,7 +190,7 @@ export default function CommercialPage() {
           </p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <a
-              href="https://wa.me/77070000000"
+              href="https://wa.me/87761514972"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center justify-center gap-2 rounded-2xl bg-white px-7 py-3.5 text-sm font-bold text-green-700 shadow-sm transition hover:bg-green-50"

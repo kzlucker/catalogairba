@@ -12,14 +12,14 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "zustand": "^5.0.2",
-    "framer-motion": "^11.15.0",
     "@supabase/ssr": "^0.5.2",
     "@supabase/supabase-js": "^2.99.2",
+    "framer-motion": "^11.15.0",
     "lucide-react": "^0.460.0",
     "next": "14.2.18",
     "react": "^18.3.1",
-    "react-dom": "^18.3.1"
+    "react-dom": "^18.3.1",
+    "zustand": "^5.0.2"
   },
   "devDependencies": {
     "@types/node": "^20",
@@ -28,6 +28,7 @@
     "autoprefixer": "^10.4.20",
     "postcss": "^8.4.49",
     "tailwindcss": "^3.4.15",
-    "typescript": "^5"
+    "typescript": "^5",
+    "xlsx": "^0.18.5"
   }
 }

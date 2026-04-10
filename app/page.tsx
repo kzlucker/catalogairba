@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useMemo } from "react";
+import { useSearchParams } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import Header from "@/components/Header";
 import HeroSlider from "@/components/HeroSlider";
@@ -22,6 +23,7 @@ export default function Home() {
   const [filterUnique, setFilterUnique] = useState(false);
   const searchQuery = useSearchStore((s) => s.searchQuery);
   const setSearchQuery = useSearchStore((s) => s.setSearchQuery);
+  const searchParams = useSearchParams();
 
   const hasActiveFilters = selectedCategoryIds.length > 0 || filterHit || filterUnique;
 
@@ -52,8 +54,18 @@ export default function Home() {
         if (productsRes.error) throw productsRes.error;
         if (categoriesRes.error) throw categoriesRes.error;
 
+        const cats = (categoriesRes.data as Category[]) ?? [];
         setProducts((productsRes.data as ProductWithCategory[]) ?? []);
-        setCategories((categoriesRes.data as Category[]) ?? []);
+        setCategories(cats);
+
+        // Автофильтр по параметру ?category= из URL
+        const urlCategory = searchParams.get("category");
+        if (urlCategory) {
+          const match = cats.find(
+            (c) => c.name.toLowerCase() === urlCategory.toLowerCase()
+          );
+          if (match) setSelectedCategoryIds([match.id]);
+        }
       } catch (err) {
         if (process.env.NODE_ENV === "development") {
           console.error("[catalog] Ошибка загрузки каталога:", err);
@@ -81,7 +93,7 @@ export default function Home() {
   }, [products, selectedCategoryIds, filterHit, filterUnique, searchQuery]);
 
   const pillBase =
-    "inline-flex shrink-0 items-center gap-1.5 rounded-2xl px-4 py-2 text-sm font-medium transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-green-500 focus-visible:ring-offset-2";
+    "inline-flex shrink-0 items-center gap-1.5 rounded-2xl px-4 py-2.5 min-h-[44px] text-sm font-medium transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-green-500 focus-visible:ring-offset-2";
   const pillInactive = "bg-gray-100 text-gray-700 hover:bg-gray-200";
   const pillActive = "bg-green-500 text-white shadow-sm hover:bg-green-600";
 
@@ -109,7 +121,7 @@ export default function Home() {
             {/* Фильтры */}
             <div className="mb-6 sm:mb-8 -mx-4 px-4 sm:mx-0 sm:px-0 space-y-3">
               {/* Строка 1: категории */}
-              <div className="flex gap-2 overflow-x-auto pb-1 scrollbar-hide flex-nowrap">
+              <div className="flex flex-wrap gap-2">
                 {categories.map((cat) => {
                   const active = selectedCategoryIds.includes(cat.id);
                   return (
@@ -154,7 +166,7 @@ export default function Home() {
                   <button
                     type="button"
                     onClick={resetFilters}
-                    className="inline-flex shrink-0 items-center gap-1 rounded-2xl px-3 py-2 text-sm font-medium text-gray-500 hover:text-gray-700 hover:bg-gray-100 transition-colors"
+                    className="inline-flex shrink-0 items-center gap-1 rounded-2xl px-3 py-2.5 min-h-[44px] text-sm font-medium text-gray-500 hover:text-gray-700 hover:bg-gray-100 transition-colors"
                   >
                     <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" className="w-3.5 h-3.5">
                       <path d="M12 4L4 12M4 4l8 8"/>
