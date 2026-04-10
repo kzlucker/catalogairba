@@ -66,13 +66,13 @@ export default function ProductCard({ product, onClick }: ProductCardProps) {
 
         {/* Badges */}
         {is_hit && (
-          <span className="absolute top-3 left-3 z-30 inline-flex items-center gap-1 rounded-full px-3 py-1 text-xs font-bold text-gray-900 shadow-md" style={{ backgroundColor: "#FFFF00" }}>
+          <span className="absolute top-2 left-2 z-30 inline-flex items-center gap-0.5 rounded-full px-2 py-0.5 text-[10px] sm:text-xs font-bold text-gray-900 shadow-md sm:top-3 sm:left-3 sm:px-3 sm:py-1" style={{ backgroundColor: "#FFFF00" }}>
             🔥 ХИТ
           </span>
         )}
         {is_unique && (
-          <span className="absolute top-3 right-3 z-30 inline-flex items-center gap-1 rounded-full bg-purple-600 px-3 py-1 text-xs font-bold text-white shadow-md">
-            ⭐ Уникальный
+          <span className="absolute top-2 right-2 z-30 inline-flex items-center gap-0.5 rounded-full bg-purple-600 px-2 py-0.5 text-[10px] sm:text-xs font-bold text-white shadow-md sm:top-3 sm:right-3 sm:px-3 sm:py-1">
+            ⭐ Уник.
           </span>
         )}
 
@@ -130,22 +130,22 @@ export default function ProductCard({ product, onClick }: ProductCardProps) {
         {weight_info && (
           <p className="text-sm text-gray-500 mb-3">{weight_info}</p>
         )}
-        <div className="grid grid-cols-4 divide-x divide-gray-100 rounded-2xl bg-gray-50 overflow-hidden">
-          <div className="flex flex-col items-center py-2 px-1">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-px rounded-2xl bg-gray-100 overflow-hidden">
+          <div className="flex flex-col items-center py-2 px-1 bg-gray-50">
             <span className="text-[10px] font-medium text-gray-400 uppercase tracking-wide">ккал</span>
-            <span className="text-sm font-bold text-amber-600 mt-0.5">{calories}</span>
+            <span className="text-xs sm:text-sm font-bold text-amber-600 mt-0.5">{calories}</span>
           </div>
-          <div className="flex flex-col items-center py-2 px-1">
+          <div className="flex flex-col items-center py-2 px-1 bg-gray-50">
             <span className="text-[10px] font-medium text-gray-400 uppercase tracking-wide">белки</span>
-            <span className="text-sm font-bold text-blue-600 mt-0.5">{proteins}г</span>
+            <span className="text-xs sm:text-sm font-bold text-blue-600 mt-0.5">{proteins}г</span>
           </div>
-          <div className="flex flex-col items-center py-2 px-1">
+          <div className="flex flex-col items-center py-2 px-1 bg-gray-50">
             <span className="text-[10px] font-medium text-gray-400 uppercase tracking-wide">жиры</span>
-            <span className="text-sm font-bold text-orange-500 mt-0.5">{fats}г</span>
+            <span className="text-xs sm:text-sm font-bold text-orange-500 mt-0.5">{fats}г</span>
           </div>
-          <div className="flex flex-col items-center py-2 px-1">
+          <div className="flex flex-col items-center py-2 px-1 bg-gray-50">
             <span className="text-[10px] font-medium text-gray-400 uppercase tracking-wide">углев</span>
-            <span className="text-sm font-bold text-green-600 mt-0.5">{carbs}г</span>
+            <span className="text-xs sm:text-sm font-bold text-green-600 mt-0.5">{carbs}г</span>
           </div>
         </div>
       </div>

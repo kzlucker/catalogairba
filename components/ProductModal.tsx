@@ -74,7 +74,7 @@ export default function ProductModal({ product, onClose }: ProductModalProps) {
       {/* Dialog */}
       <div
         ref={dialogRef}
-        className="fixed inset-4 sm:inset-6 lg:inset-8 z-50 flex items-center justify-center p-2 sm:p-4"
+        className="fixed inset-2 sm:inset-6 lg:inset-8 z-50 flex items-center justify-center p-1 sm:p-4"
         role="dialog"
         aria-modal="true"
         aria-labelledby="product-modal-title"
@@ -95,8 +95,8 @@ export default function ProductModal({ product, onClose }: ProductModalProps) {
             <X className="w-6 h-6" />
           </button>
 
-          <div className="overflow-y-auto flex-1 p-6 sm:p-8 pt-12 sm:pt-14">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-10">
+          <div className="overflow-y-auto flex-1 p-4 sm:p-8 pt-14">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 sm:gap-8 lg:gap-10">
 
               {/* Left column: photo gallery + barcode */}
               <div className="flex flex-col gap-4">
@@ -175,7 +175,7 @@ export default function ProductModal({ product, onClose }: ProductModalProps) {
 
               {/* Right column */}
               <div className="flex flex-col gap-6">
-                <h2 id="product-modal-title" className="text-2xl sm:text-3xl font-bold text-gray-900 pr-10">
+                <h2 id="product-modal-title" className="text-xl sm:text-3xl font-bold text-gray-900 pr-10 break-words">
                   {name}
                 </h2>
 
@@ -190,22 +190,22 @@ export default function ProductModal({ product, onClose }: ProductModalProps) {
                   <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-3">
                     Пищевая ценность на 100 г
                   </h3>
-                  <div className="grid grid-cols-4 divide-x divide-gray-100 rounded-2xl bg-gray-50 overflow-hidden">
-                    <div className="flex flex-col items-center py-3 px-2">
+                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-px rounded-2xl bg-gray-100 overflow-hidden">
+                    <div className="flex flex-col items-center py-3 px-2 bg-gray-50">
                       <span className="text-[10px] font-medium text-gray-400 uppercase tracking-wide">ккал</span>
-                      <span className="text-xl font-bold text-amber-600 mt-1">{calories}</span>
+                      <span className="text-base sm:text-xl font-bold text-amber-600 mt-1">{calories}</span>
                     </div>
-                    <div className="flex flex-col items-center py-3 px-2">
+                    <div className="flex flex-col items-center py-3 px-2 bg-gray-50">
                       <span className="text-[10px] font-medium text-gray-400 uppercase tracking-wide">белки</span>
-                      <span className="text-xl font-bold text-blue-600 mt-1">{proteins}г</span>
+                      <span className="text-base sm:text-xl font-bold text-blue-600 mt-1">{proteins}г</span>
                     </div>
-                    <div className="flex flex-col items-center py-3 px-2">
+                    <div className="flex flex-col items-center py-3 px-2 bg-gray-50">
                       <span className="text-[10px] font-medium text-gray-400 uppercase tracking-wide">жиры</span>
-                      <span className="text-xl font-bold text-orange-500 mt-1">{fats}г</span>
+                      <span className="text-base sm:text-xl font-bold text-orange-500 mt-1">{fats}г</span>
                     </div>
-                    <div className="flex flex-col items-center py-3 px-2">
+                    <div className="flex flex-col items-center py-3 px-2 bg-gray-50">
                       <span className="text-[10px] font-medium text-gray-400 uppercase tracking-wide">углев</span>
-                      <span className="text-xl font-bold text-green-600 mt-1">{carbs}г</span>
+                      <span className="text-base sm:text-xl font-bold text-green-600 mt-1">{carbs}г</span>
                     </div>
                   </div>
                 </div>

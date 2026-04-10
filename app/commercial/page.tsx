@@ -59,7 +59,7 @@ export default function CommercialPage() {
     <main className="min-h-screen bg-gray-50">
       {/* Hero */}
       <div className="bg-gradient-to-br from-green-700 to-emerald-600 text-white">
-        <div className="mx-auto max-w-4xl px-4 py-14 sm:px-6 sm:py-20 lg:px-8">
+        <div className="mx-auto max-w-4xl px-4 py-10 sm:px-6 sm:py-20 lg:px-8">
           <Link
             href="/"
             className="mb-8 inline-flex min-h-[44px] items-center gap-2 text-sm font-medium text-green-100 transition-colors hover:text-white"
@@ -103,7 +103,7 @@ export default function CommercialPage() {
         </section>
 
         {/* Логистика */}
-        <section className="rounded-3xl bg-blue-50 border border-blue-100 p-8">
+        <section className="rounded-3xl bg-blue-50 border border-blue-100 p-5 sm:p-8">
           <h2 className="text-2xl font-bold text-gray-900 mb-2">
             Прозрачные условия логистики
           </h2>
@@ -136,7 +136,17 @@ export default function CommercialPage() {
           <p className="text-gray-600 mb-6 text-sm leading-relaxed">
             Мы делим с вами риски. Чем выше ваш объём продаж, тем более гибкие условия по возвратам и обменам мы предоставляем.
           </p>
-          <div className="overflow-x-auto rounded-3xl border border-gray-200 shadow-sm">
+          {/* Карточки на мобиле */}
+          <div className="sm:hidden space-y-2">
+            {returnTable.map(({ range, limit }) => (
+              <div key={range} className="flex items-center justify-between gap-4 rounded-2xl border border-gray-200 bg-white px-4 py-3 shadow-sm">
+                <span className="text-sm text-gray-700 font-medium">{range}</span>
+                <span className="text-sm text-green-700 font-bold whitespace-nowrap">{limit}</span>
+              </div>
+            ))}
+          </div>
+          {/* Таблица на десктопе */}
+          <div className="hidden sm:block overflow-x-auto rounded-3xl border border-gray-200 shadow-sm">
             <table className="w-full min-w-[400px] text-sm">
               <thead>
                 <tr className="bg-green-600 text-white">
@@ -183,7 +193,7 @@ export default function CommercialPage() {
         </section>
 
         {/* CTA */}
-        <section className="rounded-3xl bg-gradient-to-r from-green-600 to-emerald-500 p-8 sm:p-10 text-white text-center">
+        <section className="rounded-3xl bg-gradient-to-r from-green-600 to-emerald-500 p-5 sm:p-10 text-white text-center">
           <p className="text-2xl font-bold mb-3">Готовы попробовать?</p>
           <p className="text-green-100 mb-7 max-w-xl mx-auto leading-relaxed">
             Закажите дегустационный сет для вашей команды сегодня, чтобы лично убедиться в качестве нашего продукта!

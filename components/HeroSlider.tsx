@@ -71,7 +71,7 @@ export default function HeroSlider() {
     <>
       <section
         className="relative w-full overflow-hidden rounded-3xl"
-        style={{ height: "clamp(340px, 56vw, 660px)" }}
+        style={{ height: "clamp(220px, 56vw, 660px)" }}
         onMouseEnter={() => setIsPaused(true)}
         onMouseLeave={() => setIsPaused(false)}
         aria-label="Hero слайдер"
@@ -106,7 +106,7 @@ export default function HeroSlider() {
             initial="enter"
             animate="center"
             exit="exit"
-            className="absolute inset-0 flex items-center justify-center px-16 sm:px-20"
+            className="absolute inset-0 flex items-center justify-center px-6 sm:px-16"
           >
             <button
               type="button"
@@ -122,7 +122,7 @@ export default function HeroSlider() {
                 loading={current === 0 ? "eager" : "lazy"}
               />
               {/* Zoom hint */}
-              <span className="absolute bottom-3 right-3 flex items-center gap-1 rounded-full bg-black/50 px-2.5 py-1 text-[11px] font-medium text-white opacity-0 group-hover:opacity-100 transition-opacity">
+              <span className="absolute bottom-3 right-3 flex items-center gap-1 rounded-full bg-black/50 px-2.5 py-1 text-[11px] font-medium text-white opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity">
                 <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-4.35-4.35M17 11A6 6 0 1 1 5 11a6 6 0 0 1 12 0zm0 0l4 4" /></svg>
                 Увеличить
               </span>
@@ -135,7 +135,7 @@ export default function HeroSlider() {
           type="button"
           onClick={goPrev}
           aria-label="Предыдущий слайд"
-          className="absolute left-3 sm:left-4 top-1/2 -translate-y-1/2 z-10 flex h-10 w-10 sm:h-11 sm:w-11 items-center justify-center rounded-full bg-white/15 backdrop-blur-sm border border-white/25 text-white transition-all hover:bg-green-500 hover:border-green-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-green-400"
+          className="absolute left-3 sm:left-4 top-1/2 -translate-y-1/2 z-10 flex h-11 w-11 items-center justify-center rounded-full bg-white/15 backdrop-blur-sm border border-white/25 text-white transition-all hover:bg-green-500 hover:border-green-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-green-400"
         >
           <ChevronLeft className="h-5 w-5" />
         </button>
@@ -145,13 +145,13 @@ export default function HeroSlider() {
           type="button"
           onClick={goNext}
           aria-label="Следующий слайд"
-          className="absolute right-3 sm:right-4 top-1/2 -translate-y-1/2 z-10 flex h-10 w-10 sm:h-11 sm:w-11 items-center justify-center rounded-full bg-white/15 backdrop-blur-sm border border-white/25 text-white transition-all hover:bg-green-500 hover:border-green-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-green-400"
+          className="absolute right-3 sm:right-4 top-1/2 -translate-y-1/2 z-10 flex h-11 w-11 items-center justify-center rounded-full bg-white/15 backdrop-blur-sm border border-white/25 text-white transition-all hover:bg-green-500 hover:border-green-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-green-400"
         >
           <ChevronRight className="h-5 w-5" />
         </button>
 
         {/* Dots */}
-        <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-10 flex items-center gap-1.5">
+        <div className="absolute bottom-2 left-1/2 -translate-x-1/2 z-10 flex items-center">
           {slides.map((slide, i) => (
             <button
               key={slide.id}
@@ -159,10 +159,12 @@ export default function HeroSlider() {
               aria-label={`Слайд ${i + 1}`}
               aria-current={i === current ? "true" : undefined}
               onClick={() => goTo(i)}
-              className="relative h-1.5 rounded-full transition-all duration-300 focus:outline-none"
-              style={{ width: i === current ? "28px" : "8px" }}
+              className="flex min-h-[44px] min-w-[24px] items-center justify-center px-1 focus:outline-none"
             >
-              <span className={`absolute inset-0 rounded-full transition-colors duration-300 ${i === current ? "bg-green-400" : "bg-white/40 hover:bg-white/70"}`} />
+              <span
+                className={`block h-1.5 rounded-full transition-all duration-300 ${i === current ? "bg-green-400" : "bg-white/40"}`}
+                style={{ width: i === current ? "28px" : "8px" }}
+              />
             </button>
           ))}
         </div>
@@ -194,7 +196,7 @@ export default function HeroSlider() {
               type="button"
               onClick={() => setLightbox(false)}
               aria-label="Закрыть"
-              className="absolute top-4 right-4 flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-white hover:bg-white/20 transition"
+              className="absolute top-4 right-4 flex h-11 w-11 items-center justify-center rounded-full bg-white/10 text-white hover:bg-white/20 transition"
             >
               <X className="h-6 w-6" />
             </button>
@@ -204,7 +206,7 @@ export default function HeroSlider() {
               type="button"
               onClick={(e) => { e.stopPropagation(); goTo(current - 1, -1); }}
               aria-label="Предыдущее фото"
-              className="absolute left-3 sm:left-6 flex h-11 w-11 items-center justify-center rounded-full bg-white/10 text-white hover:bg-green-500 transition"
+              className="absolute left-3 sm:left-6 top-1/2 -translate-y-1/2 flex h-11 w-11 items-center justify-center rounded-full bg-white/10 text-white hover:bg-green-500 transition"
             >
               <ChevronLeft className="h-6 w-6" />
             </button>
@@ -227,7 +229,7 @@ export default function HeroSlider() {
               type="button"
               onClick={(e) => { e.stopPropagation(); goTo(current + 1, 1); }}
               aria-label="Следующее фото"
-              className="absolute right-3 sm:right-6 flex h-11 w-11 items-center justify-center rounded-full bg-white/10 text-white hover:bg-green-500 transition"
+              className="absolute right-3 sm:right-6 top-1/2 -translate-y-1/2 flex h-11 w-11 items-center justify-center rounded-full bg-white/10 text-white hover:bg-green-500 transition"
             >
               <ChevronRight className="h-6 w-6" />
             </button>
