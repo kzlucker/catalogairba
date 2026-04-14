@@ -8,6 +8,7 @@ import HeroSlider from "@/components/HeroSlider";
 import ProductCard from "@/components/ProductCard";
 import ProductModal from "@/components/ProductModal";
 import ProductSkeleton from "@/components/ProductSkeleton";
+import TopProductsSheet from "@/components/TopProductsSheet";
 import { getSupabaseBrowser } from "@/lib/supabase";
 import { useSearchStore } from "@/store/useSearchStore";
 import type { Product, ProductWithCategory, Category } from "@/types/database";
@@ -26,6 +27,7 @@ function HomeContent() {
   const [loading, setLoading] = useState(true);
   const [loadError, setLoadError] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+  const [topSheetOpen, setTopSheetOpen] = useState(false);
   const [selectedCategoryIds, setSelectedCategoryIds] = useState<string[]>([]);
   const [filterHit, setFilterHit] = useState(false);
   const [filterUnique, setFilterUnique] = useState(false);
@@ -108,9 +110,11 @@ function HomeContent() {
   return (
     <div className="min-h-screen flex flex-col">
       <Header />
-      <HeroSlider />
+      <div className="px-3 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full pt-4 sm:pt-6">
+        <HeroSlider />
+      </div>
 
-      <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-10">
+      <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-10 pb-28 sm:pb-10">
         <div className="flex items-center gap-3 mb-6 sm:mb-8">
           <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">
             Каталог продукции
@@ -250,6 +254,22 @@ function HomeContent() {
           onClose={() => setSelectedProduct(null)}
         />
       )}
+
+      {/* Floating Top-15 trigger */}
+      <button
+        type="button"
+        onClick={() => setTopSheetOpen(true)}
+        style={{ bottom: "calc(1.5rem + env(safe-area-inset-bottom, 0px))" }}
+        className="fixed left-1/2 -translate-x-1/2 z-30 inline-flex items-center gap-2 rounded-full bg-green-500 px-5 py-3 text-sm font-semibold text-white shadow-lg hover:bg-green-600 active:scale-95 transition-all whitespace-nowrap"
+      >
+        <span className="text-base">🏆</span>
+        Топ 10 за месяц
+      </button>
+
+      <TopProductsSheet
+        open={topSheetOpen}
+        onClose={() => setTopSheetOpen(false)}
+      />
     </div>
   );
 }

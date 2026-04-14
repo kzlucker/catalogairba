@@ -2,12 +2,13 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Package, FolderTree, ImagePlus } from "lucide-react";
+import { Package, FolderTree, ImagePlus, Trophy } from "lucide-react";
 import { isAdminLoginPath } from "@/lib/admin-paths";
 
 const nav = [
   { href: "/admin", label: "Товары", icon: Package },
   { href: "/admin/categories", label: "Категории", icon: FolderTree },
+  { href: "/admin/top", label: "Топ 10", icon: Trophy },
   { href: "/admin/import-photos", label: "Загрузить фото", icon: ImagePlus },
 ] as const;
 
